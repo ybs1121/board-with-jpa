@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">게시판</h1>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>수정일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.id}">1</td>
+            <td>
+                <a th:href="@{/v1/mav/board/{id}(id=${board.id})}" th:text="${board.title}">Sample Title</a>
+            </td>
+            <td th:text="${board.author}">Author</td>
+            <td th:text="${board.writeDate}">2024-07-27</td>
+            <td th:text="${board.modifyDate}">2024-07-27</td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/v1/mav/board/add" class="btn btn-primary mt-3">새 글 작성</a>
+</div>
+</body>
+</html>
