@@ -17,3 +17,9 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+
+common:
+  jwt:
+    secret: testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+    expiration: 86400000
