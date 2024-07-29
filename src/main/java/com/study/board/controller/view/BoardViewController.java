@@ -1,5 +1,6 @@
 package com.study.board.controller.view;
 
+import com.study.board.dto.BoardFindDto;
 import com.study.board.entity.Board;
 import com.study.board.repository.BoardRepository;
 import com.study.board.service.BoardService;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/v1/mav/board")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
@@ -9,40 +9,69 @@
 <body>
 <div class="container">
     <h1 class="mt-5">게시판</h1>
-    <table class="table table-bordered mt-3" id="boardTable">
+
+    <!-- 검색 폼 -->
+    <div class="mt-3">
+        <form id="searchForm">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label for="searchOption" class="sr-only">검색 옵션</label>
+                    <select id="searchOption" class="form-control mb-2" required>
+                        <option value="all">모두</option>
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="searchQuery" class="sr-only">검색어</label>
+                    <input type="text" id="searchQuery" class="form-control mb-2" placeholder="검색어" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-2">검색</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 게시판 테이블 -->
+    <table class="table table-bordered mt-3">
         <thead>
         <tr>
             <th>번호</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
-            <th>수정일</th>
         </tr>
         </thead>
-        <tbody>
-        <!-- 이 부분은 JavaScript로 동적으로 추가됨 -->
+        <tbody id="boardTableBody">
+        <!-- 이 부분은 JavaScript로 동적으로 추가됩니다. -->
         </tbody>
     </table>
     <a href="/v1/mav/board/add" class="btn btn-primary mt-3">새 글 작성</a>
 </div>
+
 <script>
     $(document).ready(function() {
-        const jwt = localStorage.getItem('jwt'); // 로컬 스토리지에서 JWT를 가져옴
-        console.log(jwt)
-        console.log("--")
+        // 검색 폼 제출 시
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작을 막음
 
-        if (jwt) {
-            // AJAX 요청에 JWT를 포함시키기
+            const option = $('#searchOption').val();
+            const query = $('#searchQuery').val();
+
+            // AJAX 요청
             $.ajax({
-                url: '/v1/api/boards', // 서버에서 게시글 리스트를 가져오는 URL
+                url: '/v1/api/board/search', // 검색 요청을 위한 URL
                 type: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + jwt // JWT를 Authorization 헤더에 추가
+                data: {
+                    findOption: option,
+                    findText: query
                 },
                 success: function(response) {
-                    console.log('데이터를 성공적으로 가져왔습니다:', response);
+                    console.log('검색 결과를 성공적으로 가져왔습니다:', response);
                     // 게시글 데이터를 테이블에 추가
-                    const tableBody = $('#boardTable tbody');
+                    const tableBody = $('#boardTableBody');
+                    tableBody.empty(); // 기존 데이터 제거
                     response.forEach(board => {
                         tableBody.append(`
                             <tr>
@@ -50,18 +79,15 @@
                                 <td><a href="/v1/mav/board/${board.id}">${board.title}</a></td>
                                 <td>${board.author}</td>
                                 <td>${board.writeDate}</td>
-                                <td>${board.modifyDate}</td>
                             </tr>
                         `);
                     });
                 },
                 error: function(error) {
-                    console.error('요청 실패:', error);
+                    console.error('검색 요청 실패:', error);
                 }
             });
-        } else {
-            console.warn('JWT 토큰이 존재하지 않습니다.');
-        }
+        });
     });
 </script>
 </body>

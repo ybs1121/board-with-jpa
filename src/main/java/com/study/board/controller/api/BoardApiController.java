@@ -1,12 +1,12 @@
 package com.study.board.controller.api;
 
+import com.study.board.dto.BoardFindDto;
 import com.study.board.entity.Board;
 import com.study.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,5 +19,10 @@ public class BoardApiController {
     public String save(@RequestBody Board board) {
         boardService.save(board);
         return "success";
+    }
+
+    @GetMapping("/search")
+    public List<Board> findByBoardFind(BoardFindDto boardFindDto) {
+        return boardService.findByBoardFindDto(boardFindDto);
     }
 }

@@ -1,11 +1,10 @@
 package com.study.board.controller.api;
 
-import com.study.board.LoginDto;
+import com.study.board.dto.LoginDto;
 import com.study.board.core.jwt.JwtUtil;
 import com.study.board.entity.Member;
 import com.study.board.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

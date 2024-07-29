@@ -1,7 +1,6 @@
-package com.study.board;
+package com.study.board.dto;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Data
 public class LoginDto {

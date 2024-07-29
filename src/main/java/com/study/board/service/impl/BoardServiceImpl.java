@@ -1,5 +1,6 @@
 package com.study.board.service.impl;
 
+import com.study.board.dto.BoardFindDto;
 import com.study.board.entity.Board;
 import com.study.board.repository.BoardRepository;
 import com.study.board.service.BoardService;
@@ -23,6 +24,15 @@ public class BoardServiceImpl implements BoardService {
 
     public Board findOne(Long id) {
         return boardRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Board> findByBoardFindDto(BoardFindDto boardFindDto) {
+        List<Board> byBoardFindDto = boardRepository.findByBoardFindDto(boardFindDto);
+//        for (Board board : byBoardFindDto) {
+//            board.getComments().size();
+//        }
+        return byBoardFindDto;
     }
 
 
